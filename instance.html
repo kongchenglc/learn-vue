@@ -11,8 +11,8 @@
         <input v-model="newTodo" v-on:keyup.enter="addTodo">
         <ul>
             <li v-for="todo in todos">
-                <span v-bind:index='number'>{{todo.text}}</span>
-                <button v-on:click="removeTodo()">X</button>
+                <span>{{todo.text}}</span>
+                <button v-on:click="removeTodo($index)">X</button>
             </li>
         </ul>
     </div>
@@ -35,7 +35,7 @@
                         this.newTodo = '';
                     }
                 },
-                removeTodo: function() {
+                removeTodo: function(index) {
                     this.todos.splice(index, 1);
                 }
             }
