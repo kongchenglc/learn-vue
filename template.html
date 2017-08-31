@@ -7,7 +7,8 @@
     <title>vue template</title>
 </head>
 <body>
-    <div id="app" v-html="msg"> 
+    <!-- 纯html -->
+    <div id="app" v-html="msg" v-bind:class="dynamicId"> 
         {{msg}}
     </div>
     <script src="./vue.js"></script>
@@ -15,7 +16,8 @@
         new Vue({
             el: '#app',
             data: {
-                msg: '<span>message</span>'
+                msg: '<span v-bind:id="dynamicId">message</span>',
+                dynamicId: 'theId'
             }
         });
     </script>
