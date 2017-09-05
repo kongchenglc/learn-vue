@@ -16,7 +16,7 @@
         new Vue({
             el: '#app',
             data: {
-                msg: '<span v-bind:id="dynamicId">message</span>',
+                msg: '<span v-bind:id="dynamicId">message</span>',          //v-html只能渲染原生html文本 
                 dynamicId: 'theId'
             }
         });
