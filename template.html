@@ -8,9 +8,12 @@
 </head>
 <body>
     <!-- 纯html -->
-    <div id="app" v-html="msg" v-bind:class="dynamicId"> 
+
+    <!-- 属性值不能用mustache语法，应使用v-bind指令 -->
+    <div id="app" v-html="msg" v-bind:class="dynamicId">        
         {{msg}}
     </div>
+
     <script src="./vue.js"></script>
     <script>
         new Vue({
