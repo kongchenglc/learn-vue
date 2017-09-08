@@ -20,7 +20,7 @@
         {{message.split('').reverse().join('')}}
 
         <!-- 在这里 id 是指令v-bind的参数，告知 v-bind 指令将该元素的 id 属性与表达式 "'button-'+id" 的值绑定。 -->
-         <!-- v-bind:id的简写形式 -->
+        <!-- v-bind:id的简写形式 -->
         <!-- v-on:click的简写形式 -->
         <button :id="'button-'+id" :disabled="isButtonDisabled" @click="reverse">Button</button>
     </div>
