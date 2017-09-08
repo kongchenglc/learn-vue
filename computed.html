@@ -40,11 +40,22 @@
                     //setter接收一个参数
                     set: function(newValue) {
                         var names = newValue.split(' ');
-                        this.firsName = name[0];
-                        this.lastName = name[1];
+                        this.firsName = names[0];
+                        this.lastName = names[1];
                     }
                 }
-            }
+            },
+            //当fullname改变就调用这个函数
+            watch: {
+                fullname(newValue, oldValue) {
+                    this.printf(newValue);
+                }
+            },
+            methods: {
+                printf(val) {
+                    console.log("watch and printf:" + val);
+                }
+            },
         });
         console.log(vm.reversedMessage)     // => 'olleH'
         vm.message = 'Goodbye'              //改变数据会计算属性也会相应的改变，其具有依赖关系
