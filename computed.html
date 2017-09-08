@@ -10,6 +10,8 @@
     <div id="example">
         <p>Original message: " {{message}} "</p>
         <p>Computed reversed message: "{{ reversedMessage}} "</p>
+        <p>Time is {{now}}</p>
+        <p>fullname is {{fullname}}</p>
     </div>
 
     <script src="./vue.js"></script>
@@ -17,14 +19,36 @@
         var vm = new Vue({
             el: "#example",
             data: {
-                message: 'Hello'
+                message: 'Hello',
+                firsName: 'li',
+                lastName: 'cheng'
             },
-            computed: {
+            computed: {         //设置计算属性
+                //提供的函数将作为key的getter函数，但是会有缓存，依赖改变时才会重新求值
                 reversedMessage: function() {
                     return this.message.split('').reverse().join('');
+                },
+                now: function () {
+                    //由于Date.now()不是响应式依赖，now将不会更新
+                    return Date.now();
+                },
+                //计算属性默认只有getter，不过在需要的时候可以设置一个setter
+                fullname: {
+                    get: function() {
+                        return this.firsName + ' ' + this.lastName
+                    },
+                    //setter接收一个参数
+                    set: function(newValue) {
+                        var names = newValue.split(' ');
+                        this.firsName = name[0];
+                        this.lastName = name[1];
+                    }
                 }
             }
         });
+        console.log(vm.reversedMessage)     // => 'olleH'
+        vm.message = 'Goodbye'              //改变数据会计算属性也会相应的改变，其具有依赖关系
+        console.log(vm.reversedMessage)     // => 'eybdooG'
     </script>
 </body>
 </html>
