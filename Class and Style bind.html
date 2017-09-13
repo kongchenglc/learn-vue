@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Class and Style</title>
+</head>
+<body>
+
+
+    <!-- 对象语法 -->
+    <div id="app">
+        <!-- 普通class和指令共存 -->
+        <!-- 传给 v-bind:class 一个对象，classactive 的更新将取决于数据属性 isActive 是否为真值 -->
+        <div class="static"  
+            v-bind:class="{ active: isActive, 'text-danger': hasError }">
+                something
+        </div>
+        <!-- 或者直接绑定一个数据里的对象 -->
+        <div v-bind:class="classObject"></div>
+
+    </div>
+
+    <script src="./vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                isActive: true,
+                hasError: false, 
+                // 利用计算属性控制class
+                computed: {
+                    classObject() {
+                        return {
+                            active: this.isActive && !this.error,
+                            'text-danger': this.error && this.error.type === 'fatal'
+                        } 
+                    }
+                },
+            }
+        });
+    </script>
+
+
+</body>
+</html>
