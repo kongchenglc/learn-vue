@@ -22,7 +22,7 @@
         <div v-bind:class="[activeClass, errorClass]"></div>
 
         <!-- 或者直接绑定一个数据里的对象 -->
-        <div v-bind:class="classObject"></div>
+        <div :class="classObject">对象语法常常结合返回对象的计算属性使用</div>
 
     </div>
 
@@ -35,16 +35,16 @@
                 hasError: false, 
                 activeClass: 'active',
                 errorClass: 'text-danger',
-                // 利用计算属性控制class
-                computed: {
-                    classObject() {
-                        return {
-                            active: this.isActive && !this.error,
-                            'text-danger': this.error && this.error.type === 'fatal'
-                        } 
+            },
+            // 利用计算属性控制class
+            computed: {
+                classObject: function () {
+                    return {
+                        active: this.isActive && !this.error,
+                        'text-danger': this.error && this.error.type === 'fatal'
                     }
-                },
-            }
+                }
+            },
         });
     </script>
 
