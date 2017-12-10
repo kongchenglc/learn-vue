@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue instance</title>
+    <style>
+        img {
+            width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div id="example">{{a + b}}</div>
+    <img src="./Image.png" alt="生命周期图示">
+    <script src="./vue.js"></script>
+    <script>
+        //Vue实例代理data对象上的所有属性
+        var vm = new Vue({      
+            data: {
+                key: "value"
+            },
+            created: function() {           //生命周期钩子，其this指向调用它的Vue实例
+                console.log('key is: ' + this.key);
+            }
+        });
+        console.log(vm.$data.key==vm.key);      //使用$data访问原始对象
+
+        var data = { a: 1 }
+        var vm = new Vue({
+            data: data
+        })
+        vm.a === data.a // -> true
+        // 设置属性也会影响到原始数据
+        vm.a = 2
+        data.a // -> 2
+        // ... 反之亦然
+        data.a = 3
+        vm.a // -> 3
+
+        var data = { a: 1, b: 2 }
+        var vm = new Vue({
+            el: '#example',
+            data: data
+        })
+        vm.$data === data // -> true
+        vm.$el === document.getElementById('example') // -> true
+        // $watch 是一个实例方法
+        vm.$watch('a', function (newVal, oldVal) {
+            // 这个回调将在 `vm.a`  改变后调用
+        })
+
+        //组件构造器
+        var MyComponent = Vue.extend({
+            // 扩展选项
+        })
+        // 所有的 `MyComponent` 实例都将以预定义的扩展选项被创建
+        var myComponentInstance = new MyComponent()
+    </script>
+</body>
+</html>
