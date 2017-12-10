@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue template</title>
+</head>
+<body>
+    <!-- 纯html -->
+
+    <!-- 属性值不能用mustache语法，应使用v-bind指令 -->
+    <div id="app" v-html="msg" v-bind:class="dynamicId">        
+        {{msg}}
+    </div>
+
+
+     <!-- Mustache语法支持单行js表达式，注意不是语句。而且只可以访问全局变量的白名单，不可以访问用户定义的全局变量 -->
+    <div id="app2">
+        {{message.split('').reverse().join('')}}
+
+        <!-- 在这里 id 是指令v-bind的参数，告知 v-bind 指令将该元素的 id 属性与表达式 "'button-'+id" 的值绑定。 -->
+        <!-- v-bind:id的简写形式 -->
+        <!-- v-on:click的简写形式 -->
+        <button :id="'button-'+id" :disabled="isButtonDisabled" @click="reverse">Button</button>
+    </div>
+
+
+
+    <script src="./vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                msg: '<span v-bind:id="dynamicId">message</span>',          //v-html只能渲染原生html文本 
+                dynamicId: 'theId'
+            }
+        });
+
+        new Vue({
+            el: "#app2",
+            data: {
+                message: "message",
+                isButtonDisabled: false,        //可更改使得按钮不可用
+                id: "app2"
+            },
+            beforeCreate: function () {         //生命周期钩子，在相应的阶段会被调用
+                console.log("beforeCreate");
+            },
+            methods: {                          //使用methods定义方法
+                reverse: function() {
+                    this.message = this.message.split('').reverse().join('');
+                }
+            }
+            
+        });
+    </script>
+</body>
+</html>
