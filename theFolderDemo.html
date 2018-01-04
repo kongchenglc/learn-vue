@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>folder</title>
+</head>
+<body>
+    <ul id="theEl">
+        <t-folder v-for="item in items" :item="item"></t-folder>
+    </ul>
+
+
+    <script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
+    <script>
+        let data = [
+            {
+                value:"第一个",
+                children:[
+                    {
+                        value: "第二个",
+                        children:[]
+                    },
+                    {
+                        value: "第三个",
+                        children: []
+                    },
+                    {
+                        value: "第四个",
+                        children: []
+                    },
+                ]
+            },
+            {
+                value: "第五个",
+                children: [],
+            },
+            {
+                value: "第六个",
+                children: [],
+            },
+        ]
+
+        Vue.component('tFolder', {
+            template: `<li>
+                            <span>{{item.value}}</span>
+                            <ul v-if="item.children.length">
+                                <t-folder v-for="item in item.children" :item="item"></t-folder>
+                            </ul>
+                        </li>`,
+            props: ["item"],
+        })
+
+        new Vue({
+            el: '#theEl',
+            data: {
+                items: data,
+            }
+        })
+
+
+    </script>
+    
+</body>
+</html>
