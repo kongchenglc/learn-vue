@@ -1,66 +1,119 @@
-<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>folder</title>
+    <title>Vue - if</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+    <style>
+        ul {
+            margin: 0;
+        }
+
+        li {
+            list-style-type: none;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .fa {
+            width: 15px;
+        }
+    </style>
 </head>
+
 <body>
-    <ul id="theEl">
-        <t-folder v-for="item in items" :item="item"></t-folder>
-    </ul>
+    <div id="theId">
+        <items :model='model' v-for='(model, key, index) in theData'></items>
+    </div>
 
-
-    <script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
+    <script src="./vue.js"></script>
     <script>
-        let data = [
+        var theData = [
             {
-                value:"第一个",
-                children:[
-                    {
-                        value: "第二个",
-                        children:[]
+                "data": {
+                    "menuName": "项目管理",
+                    "menuCode": "",
+                },
+                "childTreeNode": [{
+                    "data": {
+                        "menuName": "项目",
+                        "menuCode": "BusProject",
                     },
-                    {
-                        value: "第三个",
-                        children: []
+                    "childTreeNode": []
+                }, {
+                    "data": {
+                        "menuName": "我的任务",
+                        "menuCode": "BusProject",
                     },
-                    {
-                        value: "第四个",
-                        children: []
+                    "childTreeNode": []
+                }, {
+                    "data": {
+                        "menuName": "人员周报",
+                        "menuCode": "BusProject",
                     },
-                ]
-            },
-            {
-                value: "第五个",
-                children: [],
-            },
-            {
-                value: "第六个",
-                children: [],
-            },
-        ]
-
-        Vue.component('tFolder', {
-            template: `<li>
-                            <span>{{item.value}}</span>
-                            <ul v-if="item.children.length">
-                                <t-folder v-for="item in item.children" :item="item"></t-folder>
+                    "childTreeNode": []
+                }]
+            }, {
+                "data": {
+                    "menuName": "数据统计",
+                    "menuCode": "BusClock",
+                },
+                "childTreeNode": []
+            }, {
+                "data": {
+                    "menuName": "人事管理",
+                    "menuCode": "",
+                },
+                "childTreeNode": []
+            }, {
+                "data": {
+                    "menuName": "基础管理",
+                    "menuCode": "",
+                },
+                "childTreeNode": []
+            }]
+        Vue.component('items', {
+            template: `<li>\
+                            <span @click='toggle'>
+                                <i v-if='isFolder' class="fa " :class="[open?'fa-folder-open':'fa-folder']"></i>
+                                <!--isFolder判断是否存在子级改变图标-->
+                                <i v-if='!isFolder' class="fa fa-file-text"></i> {{model.data.menuName}}
+                            </span>
+                            <ul v-show="open" v-if='isFolder'>
+                                <items v-for='cel in model.childTreeNode' :model='cel'></items>
                             </ul>
                         </li>`,
-            props: ["item"],
-        })
-
+            props: ['model'],
+            components: {},
+            data() {
+                return {
+                    open: false,
+                }
+            },
+            computed: {
+                isFolder: function () {
+                    return this.model.childTreeNode && this.model.childTreeNode.length
+                }
+            },
+            methods: {
+                toggle: function () {
+                    if (this.isFolder) {
+                        this.open = !this.open
+                    }
+                },
+            }
+        });
         new Vue({
-            el: '#theEl',
+            el: '#theId',
             data: {
-                items: data,
+                theData: theData,
             }
         })
-
-
     </script>
-    
+
+
 </body>
+
 </html>
